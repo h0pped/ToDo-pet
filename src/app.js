@@ -8,8 +8,10 @@ const FolderModel = require("./models/FolderModel");
 const TaskModel = require("./models/TaskModel");
 const { ObjectId } = require("mongodb");
 
-app.use(express.json());
+const userRouter = require("./routes/userRoutes");
 
+app.use(express.json());
+app.use(userRouter);
 app.get("/", async (req, res) => {
   const user = await UserModel.findById("612581d5a13da53e58be1cda");
 
