@@ -17,9 +17,28 @@ router.post("/folders", auth, async (req, res) => {
   }
 });
 router.get("/folders", auth, async (req, res) => {
-  await req.user.populate("folders").execPopulate();
   try {
+    await req.user.populate("folders").execPopulate();
     res.status(200).send(req.user.folders);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+router.delete("/folders/:id", auth, async (req, res) => {
+  try {
+    const folder = await FolderModel.findByIdAndRemove(
+      {
+        _id: req.params.id,
+        owner: req.user._id,
+      },
+      { useFindAndModify: false }
+    );
+    console.log(folder);
+    if (!folder) {
+      res.status(404).send();
+    }
+    res.status(200).send(folder);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
