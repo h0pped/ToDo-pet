@@ -33,6 +33,16 @@ router.get("/users/logout", auth, async (req, res) => {
     res.status(500).send(err);
   }
 });
+router.get("/users/logoutAll", auth, async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+});
 router.post("/users", async (req, res) => {
   const user = new UserModel(req.body);
   try {
@@ -40,6 +50,14 @@ router.post("/users", async (req, res) => {
     return res.status(201).send(user);
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+router.delete("/users/me", auth, async (req, res) => {
+  try {
+    await req.user.remove();
+    return res.send(req.user);
+  } catch (err) {
+    return status(500).send(err);
   }
 });
 module.exports = router;

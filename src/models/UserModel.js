@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const FolderModel = require("./FolderModel");
 const UserSchema = mongoose.Schema(
   {
     name: {
@@ -62,6 +63,13 @@ UserSchema.pre("save", async function (next) {
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
+  next();
+});
+UserSchema.pre("remove", async function (next) {
+  const user = this;
+  await FolderModel.deleteMany({
+    owner: user._id,
+  });
   next();
 });
 const UserModel = mongoose.model("User", UserSchema);
