@@ -27,14 +27,15 @@ const TaskSchema = mongoose.Schema(
   }
 );
 
-const isMatchOwners = async (task) => {
+async function isMatchOwners(task) {
+  // console.log(task);
   await task.populate("folder").execPopulate();
   if (task.folder.owner.equals(task.owner)) {
     return true;
   } else {
     return false;
   }
-};
+}
 
 TaskSchema.pre("save", async function (next) {
   const task = this;
@@ -44,14 +45,17 @@ TaskSchema.pre("save", async function (next) {
     throw new Error("You are not the owner of the folder");
   }
 });
-TaskSchema.pre("delete", async function (next) {
-  const task = this;
-  if (await isMatchOwners(task)) {
-    next();
-  } else {
-    throw new Error("You are not the owner of the folder");
-  }
-});
+// TaskSchema.pre("remove", async function (next) {
+//   const task = this;
+//   console.log("REMOVE");
+//   console.log(task);
+//   if (await isMatchOwners(task)) {
+//     next();
+//   } else {
+//     throw new Error("You are not the owner of the folder");
+//   }
+// });
+
 const TaskModel = mongoose.model("Task", TaskSchema);
 
 module.exports = TaskModel;
