@@ -1,8 +1,8 @@
 const express = require("express");
 const UserModel = require("../models/UserModel");
 const router = new express.Router();
-
-router.get("/users", async (req, res) => {
+const auth = require("../middlewares/auth");
+router.get("/users", auth, async (req, res) => {
   try {
     const users = await UserModel.find({});
     res.send(users);
@@ -24,7 +24,15 @@ router.post("/users/login", async (req, res) => {
     res.status(500).send(err);
   }
 });
-
+router.get("/users/logout", auth, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((el) => el != req.token);
+    await req.user.save();
+    res.send();
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 router.post("/users", async (req, res) => {
   const user = new UserModel(req.body);
   try {
