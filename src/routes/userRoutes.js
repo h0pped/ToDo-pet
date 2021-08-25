@@ -21,6 +21,7 @@ router.post("/users/login", async (req, res) => {
       return res.send({ user, token });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
