@@ -1,5 +1,6 @@
 const express = require("express");
 const UserModel = require("../models/UserModel");
+const FolderModel = require("../models/FolderModel");
 const router = new express.Router();
 const auth = require("../middlewares/auth");
 router.get("/users", auth, async (req, res) => {
@@ -48,8 +49,15 @@ router.post("/users", async (req, res) => {
   const user = new UserModel(req.body);
   try {
     await user.save();
-    return res.status(201).send(user);
+    const folder = new FolderModel({
+      title: "Inbox",
+      owner: user._id,
+    });
+    await folder.save();
+    const token = await user.generateAuthToken();
+    return res.status(201).send({ user, token });
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });

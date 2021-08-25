@@ -32,6 +32,7 @@ FolderSchema.pre("remove", async function (next) {
   });
   next();
 });
+
 const FolderModel = mongoose.model("Folder", FolderSchema);
 
 module.exports = FolderModel;
