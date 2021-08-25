@@ -25,6 +25,21 @@ router.get("/folders", auth, async (req, res) => {
     res.status(500).send(err);
   }
 });
+router.patch("/folders/:id", auth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const folder = await FolderModel.findById(id);
+    if (!folder) {
+      return res.status(404).send();
+    }
+    folder.title = req.body.title;
+    await folder.save();
+    res.status(200).send(folder);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
 router.delete("/folders/:id", auth, async (req, res) => {
   try {
     const folder = await FolderModel.findByIdAndRemove(
