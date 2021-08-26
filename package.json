@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js -e js,html,hbs,css"
   },
   "author": "awri.l",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.1.0",
     "mongoose": "^5.13.8",
