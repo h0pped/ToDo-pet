@@ -1,5 +1,5 @@
 body {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   background-color: var(--background-color);
   font-family: "Asap", sans-serif;
@@ -13,7 +13,7 @@ body {
 .aside-menu {
   border-right: 1px solid #191919;
   height: 100%;
-  width: 23%;
+  width: 25%;
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -73,6 +73,9 @@ body {
 }
 .task {
   margin: 0.3rem 0rem;
+}
+.task p {
+  overflow-wrap: anywhere;
 }
 .add-new-container .button {
   width: 100%;
