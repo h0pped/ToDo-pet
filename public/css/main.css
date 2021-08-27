@@ -1,0 +1,48 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--background-color);
+  font-family: "Asap", sans-serif;
+}
+
+.main-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.aside-menu {
+  border-right: 1px solid #191919;
+  height: 100%;
+  width: 20%;
+  padding: 1.5rem 2rem;
+}
+#greetings_title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.folders-title {
+  display: flex;
+  align-items: center;
+}
+.aside-menu .folders .folder-img {
+  height: 40px;
+  margin-right: 0.5rem;
+}
+.folder-title {
+  cursor: pointer;
+}
+.folders-container {
+  padding: 1rem 1.5rem;
+}
+
+.link-button {
+  cursor: pointer;
+  border: 0;
+  font-size: 1.3rem;
+}
+.forder .link-button:focus {
+  outline: none;
+}
+.folder-tasks {
+  padding: 1rem 2rem;
+}

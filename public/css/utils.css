@@ -15,10 +15,17 @@
 .title {
   font-size: 3.75rem;
 }
+.title-medium {
+  font-size: 2.7rem;
+}
 .subtitle {
   font-size: 2rem;
   font-weight: 200;
 }
+.medium-text {
+  font-size: 1.8rem;
+}
+
 .text-orange {
   color: var(--orange-color);
 }

@@ -19,6 +19,7 @@ router.post("/users/login", async (req, res) => {
     );
     if (user) {
       const token = await user.generateAuthToken();
+      res.cookie("authToken", token);
       return res.send({ user, token });
     }
   } catch (err) {
@@ -57,7 +58,6 @@ router.post("/users", async (req, res) => {
     const token = await user.generateAuthToken();
     return res.status(201).send({ user, token });
   } catch (err) {
-    console.log(err);
     res.status(500).send(err);
   }
 });

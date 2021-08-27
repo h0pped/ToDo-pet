@@ -15,20 +15,17 @@ form.addEventListener("submit", async (e) => {
   try {
     const response = await fetch("/users/login", {
       method: "POST",
+      redirect: "follow",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
-    if ((response.status = 200)) {
-      const json = await response.json();
-
-      if (json.user && json.token) {
-        localStorage.setItem("token", json.token);
-        window.location.href = "/sup";
-      }
+    if (response.status === 200) {
+      window.location.href = "/main";
     }
   } catch (err) {
+    icon.removeAttribute("trigger");
     console.log(err);
   }
 });

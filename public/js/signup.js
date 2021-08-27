@@ -22,15 +22,19 @@ form.addEventListener("submit", async (e) => {
       },
       body: JSON.stringify(data),
     });
-    if ((response.status = 201)) {
+    if (response.status === 201) {
       const json = await response.json();
 
       if (json.user && json.token) {
         localStorage.setItem("token", json.token);
         window.location.href = "/supchik";
       }
+    } else {
+      icon.removeAttribute("trigger");
     }
   } catch (err) {
+    icon.removeAttribute("trigger");
+
     console.log(err);
   }
 });

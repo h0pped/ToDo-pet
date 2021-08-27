@@ -40,6 +40,8 @@ UserSchema.virtual("folders", {
   foreignField: "owner",
 });
 UserSchema.statics.findByCredentials = async (email, password) => {
+  console.log("email", email);
+  console.log("password", password);
   const user = await UserModel.findOne({ email });
   if (!user) {
     throw new Error("Unable to login!");
