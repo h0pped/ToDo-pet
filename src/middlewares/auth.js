@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
       req.user = user;
       next();
     } else {
-      throw new Error("You sould be logged in");
+      throw new Error("You should be logged in");
     }
   } catch (err) {
     res.redirect("/signin");
