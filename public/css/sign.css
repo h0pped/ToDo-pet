@@ -30,6 +30,7 @@ body {
 .form-group label {
   display: block;
   margin-bottom: 0.4rem;
+  margin-left: 0.5rem;
 }
 .form-group input {
   width: 100%;
@@ -38,7 +39,9 @@ body {
   padding: 0.5rem 0.2rem;
   border: none;
   border-radius: 10px;
+  padding-left: 0.5rem;
 }
+
 form button {
   width: 100%;
   font-weight: 500;
