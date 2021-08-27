@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/utils.css" />
+    <link rel="stylesheet" href="/css/sign.css" />
+
+    <!-- Icons -->
+    <script
+      src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"
+    ></script>
+
+    <title>MinimaList - Sign in</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="icon flex-item">
+        <a href="/">
+
+        <lord-icon
+          src="https://cdn.lordicon.com/wloilxuq.json"
+          trigger="loop"
+          colors="primary:#191919,secondary:#ff8000"
+          style="width: 96px; height: 96px"
+        >
+        </lord-icon>
+        </a>
+      </div>
+      <div class="card authorize-card">
+        <h2 class="subtitle">Authorization</h2>
+          <form action="">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email_input">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password_input">
+            </div>
+            <button type="submit" class="button bg-orange">Sign in!</button>
+          </form>
+          <p>Don't have account? <span><a href="/signup" class="link-button link-small link-button-orange">Create</a></span> it!</p>
+      </div>
+    </div>
+    {{>footer}}
+  </body>
+</html>

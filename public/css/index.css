@@ -1,0 +1,26 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Asap", sans-serif;
+  flex-direction: column;
+}
+
+.container {
+  margin-bottom: 10rem;
+}
+.icon lord-icon {
+  transform: rotate(10deg);
+}
+
+.authorize-container {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+  font-weight: 200;
+}

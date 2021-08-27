@@ -1,15 +1,16 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/utils.css" />
 
     <!-- Icons -->
-    <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
-
+    <script
+      src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"
+    ></script>
     <title>MinimaList</title>
   </head>
   <body>
@@ -24,12 +25,15 @@
         </lord-icon>
       </div>
       <h1 class="title flex-item">
-        <span class="text-orange">Plan</span> your day and stay productive!
+        <span class="text-orange">Plan</span>
+        your day and stay productive!
       </h1>
       <div class="authorize-container flex-item">
-        <a class="link-button link-medium" href="/signing">Sign in!</a>
+        <a class="link-button link-medium" href="/signin">Sign in!</a>
         <a class="link-button link-medium" href="/signup">Sign up!</a>
       </div>
     </div>
+  {{>footer}}
   </body>
+
 </html>

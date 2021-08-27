@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Asap&display=swap");
+
+:root {
+  --orange-color: #ff8000;
+  --background-color: #f4f4f4;
+  --gray-color: #999;
+  --black-color: #191919;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  font-size: 3.75rem;
+}
+.subtitle {
+  font-size: 2rem;
+  font-weight: 200;
+}
+.text-orange {
+  color: var(--orange-color);
+}
+.text-gray {
+  color: var(--gray-color);
+}
+.bg-orange {
+  background-color: var(--orange-color);
+  color: var(--black-color);
+}
+
+.link-button {
+  text-decoration: none;
+  color: var(--black-color);
+  position: relative;
+}
+.link-medium {
+  font-size: 2rem;
+}
+.link-small {
+  font-size: 1rem;
+}
+.link-button-orange {
+  color: var(--orange-color);
+}
+
+.link-button.link-small:after {
+  height: 1px;
+}
+.link-button::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  margin-top: 0.2rem;
+  background-color: var(--black-color);
+  transition: all 0.3s cubic-bezier(0.4, 0.05, 0.55, 0.75) 0.07s;
+}
+.link-button:hover::after {
+  left: 0;
+  width: 100%;
+}
+.link-button-orange::after {
+  background-color: var(--orange-color);
+}
+.button {
+  border: none;
+  padding: 0.6rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.container {
+  height: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  padding: 1rem;
+}
+body footer {
+  justify-self: flex-end;
+}
