@@ -175,3 +175,7 @@ body {
 .hidden {
   display: none;
 }
+.active-tasklist p {
+  transition: all 0.3s ease;
+  color: var(--orange-color);
+}

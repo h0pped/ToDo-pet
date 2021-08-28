@@ -11,6 +11,7 @@ let folders = [];
 let activeTaskList;
 let activeFolderIndex;
 let activeTaskListIndex;
+let activeTaskListElement;
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
     data.json()
@@ -140,12 +141,16 @@ const markAsIncomplete = async (task) => {
 foldersContainer.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
   if (tasklist) {
+    if (activeTaskListElement) {
+      activeTaskListElement.classList.remove("active-tasklist");
+    }
     const folder = e.target.closest(".folder");
     activeFolder = folder.dataset.folderIndex;
     activeTaskListIndex = tasklist.dataset.tasklistIndex;
     activeTaskList =
       folders[folder.dataset.folderIndex].tasklists[activeTaskListIndex]._id;
-
+    tasklist.classList.add("active-tasklist");
+    activeTaskListElement = tasklist;
     renderTaskList(folder.dataset.folderIndex, tasklist.dataset.tasklistIndex);
   }
 });
