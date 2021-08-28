@@ -1,12 +1,23 @@
 let foldersEl = document.getElementsByClassName("folder-title");
 let foldersContainer = document.querySelector(".folders-container");
-
+let folders = [];
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
     data.json()
   );
 };
-const getAndRenderTaskList = async (id) => {};
+const renderTaskList = async (folderIndex, tasklistIndex) => {
+  console.log(folders);
+  const folder = folders[folderIndex];
+  const tasklist = folder.tasklists[tasklistIndex];
+  console.log("Title: ", tasklist.title);
+  console.log("----------------");
+  tasklist.tasks.forEach((task) => {
+    console.log("Task title: ", task.title);
+    console.log("Task completed: ", task.completed);
+  });
+  console.log("----------------");
+};
 const getFolders = async () => {
   const fetchedFolders = await fetch("/folders").then((data) => data.json());
 
@@ -14,7 +25,6 @@ const getFolders = async () => {
     fetchedFolders[i].tasklists = await getTasksByFolder(fetchedFolders[i]);
   }
   folders = fetchedFolders;
-  console.log(folders);
   updateUI();
 };
 
@@ -78,7 +88,9 @@ foldersContainer.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
   if (tasklist) {
     const folder = e.target.closest(".folder");
-    tasks = getAndRenderTaskList(tasklist.dataset.id);
+    console.log("Folder index: ", folder.dataset.folderIndex);
+    console.log("List index: ", tasklist.dataset.tasklistIndex);
+    renderTaskList(folder.dataset.folderIndex, tasklist.dataset.tasklistIndex);
   }
 });
 
