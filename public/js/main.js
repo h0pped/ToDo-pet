@@ -1,5 +1,11 @@
 let foldersEl = document.getElementsByClassName("folder-title");
 let foldersContainer = document.querySelector(".folders-container");
+let folderMainTitle = document.querySelector("#folder-main-title");
+let taskListMainTitle = document.querySelector("#tasklist-main-title");
+let taskListContainer = document.querySelector(".tasklist-container");
+let tasks = document.querySelector(".tasks");
+let tasksUl = document.querySelector(".tasks ul");
+
 let folders = [];
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
@@ -7,16 +13,25 @@ const getTasksByFolder = async (folder) => {
   );
 };
 const renderTaskList = async (folderIndex, tasklistIndex) => {
-  console.log(folders);
   const folder = folders[folderIndex];
   const tasklist = folder.tasklists[tasklistIndex];
-  console.log("Title: ", tasklist.title);
-  console.log("----------------");
-  tasklist.tasks.forEach((task) => {
-    console.log("Task title: ", task.title);
-    console.log("Task completed: ", task.completed);
+  folderMainTitle.innerHTML = folder.title;
+  taskListMainTitle.innerHTML = tasklist.title;
+  renderTasks(tasklist.tasks);
+};
+const renderTasks = (tasks) => {
+  tasksUl.innerHTML = "";
+  let tasksRender = "";
+  tasks.forEach((task) => {
+    tasksRender += `
+    <li class="task-main ${
+      task.completed === true ? "completed" : ""
+    }" data-task-main-id="${task._id}">
+              <p class="task-main-text">${task.title}</p>
+            </li>
+    `;
   });
-  console.log("----------------");
+  tasksUl.innerHTML = tasksRender;
 };
 const getFolders = async () => {
   const fetchedFolders = await fetch("/folders").then((data) => data.json());
@@ -83,6 +98,12 @@ const getConvertedTime = (time) => {
     newTime.toLocaleTimeString("en-US")
   );
 };
+const markAsCompleted = async (task) => {
+  console.log("TO COMPLITE: ", task);
+};
+const markAsUncompleted = async (task) => {
+  console.log("TO UNCOMPLITE: ", task);
+};
 
 foldersContainer.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
@@ -93,5 +114,14 @@ foldersContainer.addEventListener("click", (e) => {
     renderTaskList(folder.dataset.folderIndex, tasklist.dataset.tasklistIndex);
   }
 });
-
+tasksUl.addEventListener("click", (e) => {
+  const task = e.target.closest("li");
+  if (task) {
+    if (task.classList.contains("completed")) {
+      markAsCompleted(task);
+    } else {
+      markAsUncompleted(task);
+    }
+  }
+});
 getFolders();
