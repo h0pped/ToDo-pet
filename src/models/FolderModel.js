@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const TaskModel = require("./TaskModel");
+const TaskListModel = require("./TaskListModel");
 const FolderSchema = mongoose.Schema(
   {
     title: {
@@ -19,15 +19,15 @@ const FolderSchema = mongoose.Schema(
   }
 );
 
-FolderSchema.virtual("tasks", {
-  ref: "Task",
+FolderSchema.virtual("tasklists", {
+  ref: "TaskList",
   localField: "_id",
   foreignField: "folder",
 });
 
 FolderSchema.pre("remove", async function (next) {
   const folder = this;
-  await TaskModel.deleteMany({
+  await TaskListModel.deleteMany({
     folder: folder._id,
   });
   next();

@@ -1,6 +1,5 @@
 let foldersEl = document.getElementsByClassName("folder-title");
 let foldersContainer = document.querySelector(".folders-container");
-let folders = [];
 
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasks/byfolder/${folder._id}`).then((data) =>
@@ -26,19 +25,20 @@ const generateFolder = (data) => {
   let tasks = "";
 
   data.tasks.forEach((task) => {
-    tasks += `<li><div class="task"><p>${
+    tasks += `<li><div class="task" data-task="${
+      task._id
+    }"><p class="task-text">${
       task.title
     }<span class="date-span">${getConvertedTime(
       task.updatedAt
     )}</span></p></div></li>`;
   });
-  console.log(tasks);
   folder.innerHTML = `
   <div class="folder-title">
                   <button class="medium-text link-button">${data.title}</button>
                 </div>
                 <div class="folder-tasks">
-                  <ul>
+                  <ul class="tasks-list">
                   ${tasks}
                   </ul>
                 </div>
@@ -52,8 +52,6 @@ const updateUI = () => {
   });
   for (let i = 0; i < foldersEl.length; i++) {
     foldersEl[i].addEventListener("click", function () {
-      console.log(this);
-      console.log("hello");
       this.classList.toggle("active");
       let content = this.nextElementSibling;
       if (content.style.display === "block") {
@@ -73,5 +71,12 @@ const getConvertedTime = (time) => {
     newTime.toLocaleTimeString("en-US")
   );
 };
+
+foldersContainer.addEventListener("click", (e) => {
+  const task = e.target.closest(".task");
+  if (task) {
+    console.log(task.dataset.task);
+  }
+});
 
 getFolders();

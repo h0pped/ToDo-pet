@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const FolderModel = require("./FolderModel");
-const TaskModel = require("./TaskModel");
+const TaskListModel = require("./TaskListModel");
 const UserSchema = mongoose.Schema(
   {
     name: {
@@ -74,7 +74,7 @@ UserSchema.pre("remove", async function (next) {
   await FolderModel.deleteMany({
     owner: user._id,
   });
-  await TaskModel.deleteMany({
+  await TaskListModel.deleteMany({
     owner: user._id,
   });
   next();

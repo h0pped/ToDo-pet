@@ -18,7 +18,7 @@ require("./db/mongoose");
 
 const userRouter = require("./routes/userRoutes");
 const folderRouter = require("./routes/folderRoutes");
-const taskRouter = require("./routes/taskRoutes");
+const tasklistsRouter = require("./routes/tasklistsRoutes");
 const staticRouter = require("./routes/staticRoutes");
 app.use(express.json());
 
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 app.use(userRouter);
 app.use(folderRouter);
-app.use(taskRouter);
+app.use(tasklistsRouter);
 app.use(staticRouter);
 
 app.listen(port, () => {

@@ -1,18 +1,28 @@
 const mongoose = require("mongoose");
 
-const TaskSchema = mongoose.Schema(
+const TaskListSchema = mongoose.Schema(
   {
     title: {
       type: String,
       trim: true,
       required: true,
-      default: "New Task",
+      default: "New TaskList",
     },
-    completed: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
+    tasks: [
+      {
+        title: {
+          type: String,
+          trim: true,
+          required: true,
+          default: "New Task",
+        },
+        completed: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+      },
+    ],
     folder: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Folder",
@@ -37,7 +47,7 @@ async function isMatchOwners(task) {
   }
 }
 
-TaskSchema.pre("save", async function (next) {
+TaskListSchema.pre("save", async function (next) {
   const task = this;
   if (await isMatchOwners(task)) {
     next();
@@ -56,6 +66,6 @@ TaskSchema.pre("save", async function (next) {
 //   }
 // });
 
-const TaskModel = mongoose.model("Task", TaskSchema);
+const TaskListModel = mongoose.model("TaskList", TaskListSchema);
 
-module.exports = TaskModel;
+module.exports = TaskListModel;

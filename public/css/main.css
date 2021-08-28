@@ -89,3 +89,10 @@ body {
 .link-button {
   background-color: transparent;
 }
+.task-text {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.task-text:hover {
+  transform: scale(1.05);
+}
