@@ -96,3 +96,79 @@ body {
 .task-text:hover {
   transform: scale(1.05);
 }
+.tasklist-container {
+  width: 100%;
+  margin-top: 2rem;
+  margin-left: 3.5rem;
+}
+.folder-main-title {
+  width: 90%;
+  border-bottom: 1px solid #191919;
+  margin-bottom: 1rem;
+}
+.folder-main-title h2 {
+  font-size: 3rem;
+}
+.tasklist-title {
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+.tasks {
+  margin-left: 3rem;
+  font-size: 1.5rem;
+}
+.tasks ul {
+  list-style: none;
+}
+
+.tasks ul li {
+  margin: 0.75rem 0rem;
+}
+.tasks ul li {
+  cursor: pointer;
+}
+.tasks ul li::before {
+  content: "•";
+  transition: color 0.3s ease;
+
+  color: #191919;
+}
+.tasks ul li.completed::before {
+  content: "•";
+  color: #aeacac;
+}
+.task-main p {
+  display: inline-block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.task-main.completed p {
+  color: #aeacac;
+}
+
+.task-main .task-main-text::after {
+  content: "";
+  height: 1px;
+  width: 0%;
+  background: var(--orange-color);
+  opacity: 0.5;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transition: width 0.3s ease;
+}
+.task-main.completed .task-main-text::after {
+  width: 101%;
+}
+.add-new-task input {
+  border: 0;
+  width: 90%;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  padding: 0rem 0rem 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--orange-color);
+  background: transparent;
+}
+.add-new-task input:focus {
+  outline: none;
+}
