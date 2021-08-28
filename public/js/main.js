@@ -7,6 +7,7 @@ let tasks = document.querySelector(".tasks");
 let tasksUl = document.querySelector(".tasks ul");
 
 let folders = [];
+let activeTaskList;
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
     data.json()
@@ -99,18 +100,41 @@ const getConvertedTime = (time) => {
   );
 };
 const markAsCompleted = async (task) => {
-  console.log("TO COMPLITE: ", task);
+  const taskid = task.dataset.taskMainId;
+  await fetch(`/tasklists/${activeTaskList}/markAsDone/${taskid}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      task.classList.add("completed");
+    });
 };
-const markAsUncompleted = async (task) => {
-  console.log("TO UNCOMPLITE: ", task);
+const markAsIncomplete = async (task) => {
+  const taskid = task.dataset.taskMainId;
+  await fetch(`/tasklists/${activeTaskList}/markAsIncomplete/${taskid}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      task.classList.remove("completed");
+    });
 };
 
 foldersContainer.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
   if (tasklist) {
     const folder = e.target.closest(".folder");
-    console.log("Folder index: ", folder.dataset.folderIndex);
-    console.log("List index: ", tasklist.dataset.tasklistIndex);
+    activeTaskList =
+      folders[folder.dataset.folderIndex].tasklists[
+        tasklist.dataset.tasklistIndex
+      ]._id;
+    console.log("active task list: ", activeTaskList);
     renderTaskList(folder.dataset.folderIndex, tasklist.dataset.tasklistIndex);
   }
 });
@@ -118,9 +142,9 @@ tasksUl.addEventListener("click", (e) => {
   const task = e.target.closest("li");
   if (task) {
     if (task.classList.contains("completed")) {
-      markAsCompleted(task);
+      markAsIncomplete(task);
     } else {
-      markAsUncompleted(task);
+      markAsCompleted(task);
     }
   }
 });

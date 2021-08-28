@@ -44,7 +44,7 @@ router.post("/tasklists/addTask/:id", auth, async (req, res) => {
   }
 });
 // Mark task as done
-router.post("/tasklists/:id/markAsDone/:taskid", auth, async (req, res) => {
+router.patch("/tasklists/:id/markAsDone/:taskid", auth, async (req, res) => {
   try {
     const tasklistId = req.params.id;
     const taskId = req.params.taskid;
@@ -67,6 +67,34 @@ router.post("/tasklists/:id/markAsDone/:taskid", auth, async (req, res) => {
     res.status(500).send(err);
   }
 });
+router.patch(
+  "/tasklists/:id/markAsIncomplete/:taskid",
+  auth,
+  async (req, res) => {
+    try {
+      const tasklistId = req.params.id;
+      const taskId = req.params.taskid;
+      const tasklist = await TaskListModel.findOne({
+        _id: tasklistId,
+        owner: req.user._id,
+      });
+      if (!tasklist) {
+        return res.status(404).send();
+      }
+      const task = tasklist.tasks.find((el) => el._id == taskId);
+      if (!task) {
+        return res.status(404).send();
+      }
+      task.completed = false;
+      await tasklist.save();
+      res.send(task);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+  }
+);
+
 // Delete task by id
 router.delete("/tasklists/:id", auth, async (req, res) => {
   const task = await TaskListModel.findOneAndDelete(

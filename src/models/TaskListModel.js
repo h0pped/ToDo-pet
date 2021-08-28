@@ -52,7 +52,7 @@ TaskListSchema.pre("save", async function (next) {
   if (await isMatchOwners(task)) {
     next();
   } else {
-    throw new Error("You are not the owner of the folder");
+    throw new Error("You are not the owner of the Tasklist");
   }
 });
 // TaskSchema.pre("remove", async function (next) {
