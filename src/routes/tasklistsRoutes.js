@@ -7,6 +7,7 @@ const router = new express.Router();
 
 // Get all tasklists of the folder
 // id - id of the folder
+("tasklists/byfolder/6129a455d246ba93c4f5684f");
 router.get("/tasklists/byfolder/:id", auth, async (req, res) => {
   const tasks = await TaskListModel.find({
     folder: req.params.id,

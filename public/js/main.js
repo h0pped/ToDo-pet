@@ -2,32 +2,34 @@ let foldersEl = document.getElementsByClassName("folder-title");
 let foldersContainer = document.querySelector(".folders-container");
 
 const getTasksByFolder = async (folder) => {
-  return await fetch(`/tasks/byfolder/${folder._id}`).then((data) =>
+  return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
     data.json()
   );
 };
+const getAndRenderTaskList = async (id) => {};
 const getFolders = async () => {
   const fetchedFolders = await fetch("/folders").then((data) => data.json());
 
   for (let i = 0; i < fetchedFolders.length; i++) {
-    fetchedFolders[i].tasks = await getTasksByFolder(fetchedFolders[i]);
+    fetchedFolders[i].tasklists = await getTasksByFolder(fetchedFolders[i]);
   }
   folders = fetchedFolders;
   console.log(folders);
   updateUI();
 };
 
-const generateFolder = (data) => {
+const generateFolder = (data, index) => {
   const folder = document.createElement("div");
 
   folder.classList.add("folder");
-  console.log(data.tasks);
-  let tasks = "";
+  folder.dataset.folderIndex = index;
+  console.log(data);
+  let tasklists = "";
 
-  data.tasks.forEach((task) => {
-    tasks += `<li><div class="task" data-task="${
+  data.tasklists.forEach((task, index) => {
+    tasklists += `<li><div class="task" data-task="${
       task._id
-    }"><p class="task-text">${
+    }" data-tasklist-index="${index}"><p class="task-text">${
       task.title
     }<span class="date-span">${getConvertedTime(
       task.updatedAt
@@ -39,7 +41,7 @@ const generateFolder = (data) => {
                 </div>
                 <div class="folder-tasks">
                   <ul class="tasks-list">
-                  ${tasks}
+                  ${tasklists}
                   </ul>
                 </div>
   `;
@@ -47,8 +49,8 @@ const generateFolder = (data) => {
 };
 
 const updateUI = () => {
-  folders.forEach((folder) => {
-    generateFolder(folder);
+  folders.forEach((folder, index) => {
+    generateFolder(folder, index);
   });
   for (let i = 0; i < foldersEl.length; i++) {
     foldersEl[i].addEventListener("click", function () {
@@ -73,9 +75,10 @@ const getConvertedTime = (time) => {
 };
 
 foldersContainer.addEventListener("click", (e) => {
-  const task = e.target.closest(".task");
-  if (task) {
-    console.log(task.dataset.task);
+  const tasklist = e.target.closest(".task");
+  if (tasklist) {
+    const folder = e.target.closest(".folder");
+    tasks = getAndRenderTaskList(tasklist.dataset.id);
   }
 });
 
