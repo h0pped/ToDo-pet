@@ -172,3 +172,6 @@ body {
 .add-new-task input:focus {
   outline: none;
 }
+.hidden {
+  display: none;
+}

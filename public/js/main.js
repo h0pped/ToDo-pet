@@ -5,9 +5,12 @@ let taskListMainTitle = document.querySelector("#tasklist-main-title");
 let taskListContainer = document.querySelector(".tasklist-container");
 let tasks = document.querySelector(".tasks");
 let tasksUl = document.querySelector(".tasks ul");
+let AddNewTaskInput = document.querySelector(".add-new-task");
 
 let folders = [];
 let activeTaskList;
+let activeFolderIndex;
+let activeTaskListIndex;
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
     data.json()
@@ -32,6 +35,7 @@ const renderTasks = (tasks) => {
             </li>
     `;
   });
+  AddNewTaskInput.classList.remove("hidden");
   tasksUl.innerHTML = tasksRender;
 };
 const getFolders = async () => {
@@ -109,6 +113,10 @@ const markAsCompleted = async (task) => {
   })
     .then((res) => res.json())
     .then((res) => {
+      folders[activeFolder].tasklists[activeTaskListIndex].tasks.find(
+        (el) => el._id == taskid
+      ).completed = true;
+
       task.classList.add("completed");
     });
 };
@@ -122,6 +130,9 @@ const markAsIncomplete = async (task) => {
   })
     .then((res) => res.json())
     .then((res) => {
+      folders[activeFolder].tasklists[activeTaskListIndex].tasks.find(
+        (el) => el._id == taskid
+      ).completed = false;
       task.classList.remove("completed");
     });
 };
@@ -130,11 +141,11 @@ foldersContainer.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
   if (tasklist) {
     const folder = e.target.closest(".folder");
+    activeFolder = folder.dataset.folderIndex;
+    activeTaskListIndex = tasklist.dataset.tasklistIndex;
     activeTaskList =
-      folders[folder.dataset.folderIndex].tasklists[
-        tasklist.dataset.tasklistIndex
-      ]._id;
-    console.log("active task list: ", activeTaskList);
+      folders[folder.dataset.folderIndex].tasklists[activeTaskListIndex]._id;
+
     renderTaskList(folder.dataset.folderIndex, tasklist.dataset.tasklistIndex);
   }
 });
