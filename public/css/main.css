@@ -47,12 +47,17 @@ body {
 }
 .folder-title {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 .folders-container {
   padding: 1rem 0rem 1.5rem 1.5rem;
 }
 .folder {
   margin: 1rem 0;
+}
+.folder lord-icon {
+  margin-right: 0.5rem;
 }
 .folder:first-child {
   margin: 0;
@@ -197,7 +202,6 @@ body {
   align-items: center;
 }
 .icon-hidden {
-  visibility: hidden;
   opacity: 0;
 }
 .folders-container input {
@@ -211,4 +215,10 @@ body {
 }
 .folders-container input:focus {
   outline: none;
+}
+.folder-title .remove-icon {
+  margin-left: 0.5rem;
+}
+.folder-title:hover .remove-icon {
+  opacity: 1;
 }

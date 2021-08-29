@@ -77,9 +77,19 @@ const generateFolder = (data, index) => {
     )}</span></p></div></li>`;
   });
   folder.innerHTML = `
+  
   <div class="folder-title">
                   <button class="medium-text link-button">${data.title}</button>
+                  <div class="folder-delete-container">
+                    <lord-icon class="remove-icon icon-hidden"
+                      src="https://cdn.lordicon.com/rivoakkk.json"
+                      trigger="hover"
+                      colors="primary:#191919,secondary:#ff8000"
+                      style="width:25px;height:25px">
+                    </lord-icon>
+                  </div>
                 </div>
+
                 <div class="folder-tasks">
                   <ul class="tasks-list">
                   ${tasklists}
@@ -88,20 +98,38 @@ const generateFolder = (data, index) => {
   `;
   foldersMain.appendChild(folder);
 };
-
+const updateFolderIndexes = () => {
+  const foldersElements = foldersMain.childNodes;
+  foldersElements.forEach(
+    (folder, index) => (folder.dataset.folderIndex = index)
+  );
+};
 const updateUI = () => {
   foldersMain.innerHTML = "";
   folders.forEach((folder, index) => {
     generateFolder(folder, index);
   });
   for (let i = 0; i < foldersEl.length; i++) {
-    foldersEl[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      let content = this.nextElementSibling;
-      if (content.style.display === "block") {
-        content.style.display = "none";
+    foldersEl[i].addEventListener("click", function (e) {
+      if (e.target.classList.contains("remove-icon")) {
+        const folder = e.target.closest(".folder");
+        if (folder) {
+          const folderElement =
+            foldersMain.childNodes[folder.dataset.folderIndex];
+          removeFolder(folderElement);
+          folders.splice(folder.dataset.folderIndex, 1);
+          console.log(folderElement);
+          foldersMain.removeChild(folderElement);
+          updateFolderIndexes();
+        }
       } else {
-        content.style.display = "block";
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
       }
     });
   }
@@ -200,6 +228,18 @@ const addFolder = async (title) => {
       folders.push(res);
       updateUI();
     });
+};
+const removeFolder = async (folder) => {
+  console.log(folders);
+  const folderId = folders[folder.dataset.folderIndex]._id;
+  await fetch(`/folders/${folderId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => console.log("DELETED: ", res));
 };
 foldersMain.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
