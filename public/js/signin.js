@@ -14,7 +14,7 @@ form.addEventListener("submit", async (e) => {
   };
   try {
     const response = await fetch("/users/login", {
-      method: "PATCH",
+      method: "POST",
       redirect: "follow",
       headers: {
         "Content-Type": "application/json",
@@ -23,6 +23,8 @@ form.addEventListener("submit", async (e) => {
     });
     if (response.status === 200) {
       window.location.href = "/main";
+    } else {
+      icon.removeAttribute("trigger");
     }
   } catch (err) {
     icon.removeAttribute("trigger");
