@@ -10,6 +10,7 @@ body {
   display: flex;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 .aside-menu {
   border-right: 1px solid #191919;
@@ -19,6 +20,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: auto;
 }
 #greetings_title {
   text-align: center;
@@ -197,4 +199,16 @@ body {
 .icon-hidden {
   visibility: hidden;
   opacity: 0;
+}
+.folders-container input {
+  border: 0;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  padding: 0rem 0rem 0.5rem 0rem;
+  border-bottom: 1px solid var(--orange-color);
+  background: transparent;
+}
+.folders-container input:focus {
+  outline: none;
 }

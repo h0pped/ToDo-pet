@@ -1,5 +1,6 @@
 let foldersEl = document.getElementsByClassName("folder-title");
 let foldersContainer = document.querySelector(".folders-container");
+let foldersMain = document.querySelector(".folders-main");
 let folderMainTitle = document.querySelector("#folder-main-title");
 let taskListMainTitle = document.querySelector("#tasklist-main-title");
 let taskListContainer = document.querySelector(".tasklist-container");
@@ -7,6 +8,9 @@ let tasks = document.querySelector(".tasks");
 let tasksUl = document.querySelector(".tasks ul");
 let AddNewTaskInputDiv = document.querySelector(".add-new-task");
 let AddNewTaskInput = document.querySelector("#newTask");
+let addNewTaskPlus = document.querySelector(".plus");
+let addNewFolderEl = document.querySelector(".add-new-folder");
+let addNewFolderInput = document.querySelector(".add-new-folder input");
 
 let folders = [];
 let activeTaskList;
@@ -63,7 +67,6 @@ const generateFolder = (data, index) => {
   folder.dataset.folderIndex = index;
   console.log(data);
   let tasklists = "";
-
   data.tasklists.forEach((task, index) => {
     tasklists += `<li><div class="task" data-task="${
       task._id
@@ -83,10 +86,11 @@ const generateFolder = (data, index) => {
                   </ul>
                 </div>
   `;
-  foldersContainer.appendChild(folder);
+  foldersMain.appendChild(folder);
 };
 
 const updateUI = () => {
+  foldersMain.innerHTML = "";
   folders.forEach((folder, index) => {
     generateFolder(folder, index);
   });
@@ -180,7 +184,24 @@ const addTask = async (title) => {
       renderTasks(folders[activeFolder].tasklists[activeTaskListIndex].tasks);
     });
 };
-foldersContainer.addEventListener("click", (e) => {
+const addFolder = async (title) => {
+  await fetch(`/folders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      res.tasklists = [];
+      folders.push(res);
+      updateUI();
+    });
+};
+foldersMain.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
   if (tasklist) {
     if (activeTaskListElement) {
@@ -215,5 +236,15 @@ AddNewTaskInput.addEventListener("keyup", (e) => {
     addTask(AddNewTaskInput.value);
     AddNewTaskInput.value = "";
   }
+});
+addNewFolderInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    addFolder(addNewFolderInput.value);
+    addNewFolderEl.classList.add("hidden");
+  }
+});
+addNewTaskPlus.addEventListener("click", (e) => {
+  addNewFolderEl.classList.remove("hidden");
+  addNewFolderEl.querySelector("input").focus();
 });
 getFolders();
