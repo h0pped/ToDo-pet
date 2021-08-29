@@ -25,13 +25,24 @@ FolderSchema.virtual("tasklists", {
   foreignField: "folder",
 });
 
-FolderSchema.pre("remove", async function (next) {
-  const folder = this;
+async function removeChildrenTasks(folder, next) {
+  console.log("REMOVE FOLDER");
+  console.log(folder._id);
   await TaskListModel.deleteMany({
     folder: folder._id,
   });
   next();
+}
+
+FolderSchema.pre("remove", async function (next) {
+  const folder = this;
+  removeChildrenTasks(folder, next);
 });
+// FolderSchema.post("findOneAndRemove", async function (next) {
+//   const folder = this;
+//   console.log(folder.get("_id"));
+//   removeChildrenTasks(folder, next);
+// });
 
 const FolderModel = mongoose.model("Folder", FolderSchema);
 

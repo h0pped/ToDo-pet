@@ -1,8 +1,8 @@
 let foldersEl = document.getElementsByClassName("folder-title");
 let foldersContainer = document.querySelector(".folders-container");
 let foldersMain = document.querySelector(".folders-main");
-let folderMainTitle = document.querySelector("#folder-main-title");
-let taskListMainTitle = document.querySelector("#tasklist-main-title");
+let folderMainInput = document.querySelector("#folder-name-input");
+let taskListMainInput = document.querySelector("#tasklist-name-input");
 let taskListContainer = document.querySelector(".tasklist-container");
 let tasks = document.querySelector(".tasks");
 let tasksUl = document.querySelector(".tasks ul");
@@ -25,8 +25,8 @@ const getTasksByFolder = async (folder) => {
 const renderTaskList = async (folderIndex, tasklistIndex) => {
   const folder = folders[folderIndex];
   const tasklist = folder.tasklists[tasklistIndex];
-  folderMainTitle.innerHTML = folder.title;
-  taskListMainTitle.innerHTML = tasklist.title;
+  folderMainInput.value = folder.title;
+  taskListMainInput.value = tasklist.title;
   renderTasks(tasklist.tasks);
 };
 const renderTasks = (tasks) => {
@@ -235,6 +235,7 @@ const addFolder = async (title) => {
     .then((res) => {
       res.tasklists = [];
       folders.push(res);
+      // TODO: JUST ADD NEW FOLDER, WITHOUT UI UPDATING
       updateUI();
     });
 };
@@ -248,6 +249,27 @@ const removeFolder = async (folder) => {
   })
     .then((res) => res.json())
     .then((res) => console.log("DELETED: ", res));
+};
+const changeFolderName = async (folderIndex, title) => {
+  console.log("Folder index: ", folderIndex);
+  console.log("Folder title: ", title);
+  const folderId = folders[folderIndex]._id;
+  await fetch(`/folders/${folderId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      folders[folderIndex].title = res.title;
+      foldersMain
+        .querySelectorAll(".folder")
+        [folderIndex].querySelector("button.link-button").innerHTML = res.title;
+    });
 };
 const addTaskList = async (folderIndex, title) => {
   const folderId = folders[folderIndex]._id;
@@ -263,6 +285,32 @@ const addTaskList = async (folderIndex, title) => {
     .then((res) => res.json())
     .then((res) => {
       folders[folderIndex].tasklists.push(res);
+    });
+};
+const changeListName = async (folderIndex, taskIndex, title) => {
+  const tasklistId = folders[folderIndex].tasklists[taskIndex]._id;
+
+  await fetch(`/tasklists/${tasklistId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      folders[folderIndex].tasklists[taskIndex].title = res.title;
+      const task = foldersMain
+        .querySelectorAll(".folder")
+        [folderIndex].querySelectorAll(".tasks-list li")
+        [taskIndex].querySelector(".task-text");
+      task.innerHTML = `
+        ${res.title}<span class="date-span">${getConvertedTime(
+        res.updatedAt
+      )}</span>
+        `;
     });
 };
 foldersMain.addEventListener("click", (e) => {
@@ -322,6 +370,18 @@ AddNewTaskInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     addTask(AddNewTaskInput.value);
     AddNewTaskInput.value = "";
+  }
+});
+folderMainInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    changeFolderName(activeFolder, folderMainInput.value);
+  }
+});
+taskListMainInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    console.log("Active folder: ", activeFolder);
+    console.log("Active list: ", activeTaskListIndex);
+    changeListName(activeFolder, activeTaskListIndex, taskListMainInput.value);
   }
 });
 addNewFolderInput.addEventListener("keyup", (e) => {

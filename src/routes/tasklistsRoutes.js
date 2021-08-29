@@ -1,5 +1,6 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
+const { set } = require("mongoose");
 const auth = require("../middlewares/auth");
 const TaskListModel = require("../models/TaskListModel");
 
@@ -94,6 +95,24 @@ router.patch(
     }
   }
 );
+router.patch("/tasklists/:listid", auth, async (req, res) => {
+  try {
+    const tasklistId = req.params.listid;
+    const tasklist = await TaskListModel.findById({
+      _id: tasklistId,
+      owner: req.user._id,
+    });
+    if (!tasklist) {
+      return res.status(404).send();
+    }
+    tasklist.title = req.body.title;
+    await tasklist.save();
+    res.send(tasklist);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ err });
+  }
+});
 router.delete("/tasklists/:id/removeTask/:taskid", auth, async (req, res) => {
   try {
     const tasklistId = req.params.id;

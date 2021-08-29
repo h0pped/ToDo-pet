@@ -13,6 +13,6 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 router.get("/main", auth, (req, res) => {
-  res.render("main");
+  res.render("main", { username: req.user.name });
 });
 module.exports = router;

@@ -18,7 +18,7 @@
       <aside class="aside-menu">
         <div class="tasks-aside-container">
 
-          <h2 id="greetings_title" class="title-medium">Hello, Illia</h2>
+          <h2 id="greetings_title" class="title-medium">Hello, {{username}}</h2>
           <div class="folders">
             <div class="folders-title">
               <div class="left">
@@ -46,17 +46,26 @@
 
           </div>
         </div>
-        <div class="add-new-container">
 
-          <button class="button bg-orange">Create new folder!</button>
-        </div>
       </aside>
       <div class="tasklist-container">
         <div class="folder-main-title">
-          <h2 class="subtitle" id="folder-main-title"></h2>
+          <input
+            type="text"
+            class="subtitle"
+            name="folder-name-input"
+            id="folder-name-input"
+          />
+          {{! <h2 class="subtitle" id="folder-main-title"></h2> }}
         </div>
         <div class="tasklist-title">
-          <h2 class="subtitle text-orange" id="tasklist-main-title"></h2>
+          <input
+            type="text"
+            class="subtitle text-orange"
+            name="folder-name-input"
+            id="tasklist-name-input"
+          />
+          {{! <h2 class="subtitle text-orange" id="tasklist-main-title"></h2> }}
         </div>
         <div class="tasks">
           <ul>

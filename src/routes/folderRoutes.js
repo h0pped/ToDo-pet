@@ -32,7 +32,7 @@ router.get("/folders", auth, async (req, res) => {
 router.patch("/folders/:id", auth, async (req, res) => {
   try {
     const id = req.params.id;
-    const folder = await FolderModel.find({
+    const folder = await FolderModel.findOne({
       _id: id,
       owner: req.user._id,
     });
@@ -51,7 +51,7 @@ router.patch("/folders/:id", auth, async (req, res) => {
 // delete folder
 router.delete("/folders/:id", auth, async (req, res) => {
   try {
-    const folder = await FolderModel.findByIdAndRemove(
+    const folder = await FolderModel.findOne(
       {
         _id: req.params.id,
         owner: req.user._id,
@@ -62,6 +62,7 @@ router.delete("/folders/:id", auth, async (req, res) => {
     if (!folder) {
       res.status(404).send();
     }
+    await folder.remove();
     res.status(200).send(folder);
   } catch (err) {
     console.log(err);
