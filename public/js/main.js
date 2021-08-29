@@ -76,6 +76,15 @@ const generateFolder = (data, index) => {
       task.updatedAt
     )}</span></p></div></li>`;
   });
+  tasklists += `
+  <li class="add-new-tasklist">
+                <input
+                  type="text"
+                  name="newTasklist"
+                  class="newTaskList"
+                  placeholder="Add new List.."
+                />
+              </li>`;
   folder.innerHTML = `
   
   <div class="folder-title">
@@ -230,7 +239,6 @@ const addFolder = async (title) => {
     });
 };
 const removeFolder = async (folder) => {
-  console.log(folders);
   const folderId = folders[folder.dataset.folderIndex]._id;
   await fetch(`/folders/${folderId}`, {
     method: "DELETE",
@@ -240,6 +248,22 @@ const removeFolder = async (folder) => {
   })
     .then((res) => res.json())
     .then((res) => console.log("DELETED: ", res));
+};
+const addTaskList = async (folderIndex, title) => {
+  const folderId = folders[folderIndex]._id;
+  await fetch(`/tasklists/${folderId}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      folders[folderIndex].tasklists.push(res);
+    });
 };
 foldersMain.addEventListener("click", (e) => {
   const tasklist = e.target.closest(".task");
@@ -255,6 +279,29 @@ foldersMain.addEventListener("click", (e) => {
     tasklist.classList.add("active-tasklist");
     activeTaskListElement = tasklist;
     renderTaskList(folder.dataset.folderIndex, tasklist.dataset.tasklistIndex);
+  }
+});
+foldersMain.addEventListener("keyup", async (e) => {
+  if (e.target.classList.contains("newTaskList") && e.key === "Enter") {
+    const tasklistTitle = e.target.value;
+    const folderIndex = e.target.closest(".folder").dataset.folderIndex;
+    await addTaskList(folderIndex, tasklistTitle);
+    const tasklist =
+      folders[folderIndex].tasklists[folders[folderIndex].tasklists.length - 1];
+    const tasklistEl = document.createElement("li");
+    tasklistEl.innerHTML = `<div class="task" data-task="${
+      tasklist._id
+    }" data-tasklist-index="${
+      folders[folderIndex].tasklists.length - 1
+    }"><p class="task-text">${
+      tasklist.title
+    }<span class="date-span">${getConvertedTime(
+      tasklist.updatedAt
+    )}</span></p></div>`;
+    e.target
+      .closest(".tasks-list")
+      .insertBefore(tasklistEl, e.target.closest(".add-new-tasklist"));
+    e.target.value = "";
   }
 });
 tasksUl.addEventListener("click", (e) => {
@@ -280,6 +327,7 @@ AddNewTaskInput.addEventListener("keyup", (e) => {
 addNewFolderInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     addFolder(addNewFolderInput.value);
+    addNewFolderInput.value = "";
     addNewFolderEl.classList.add("hidden");
   }
 });

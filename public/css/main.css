@@ -222,3 +222,12 @@ body {
 .folder-title:hover .remove-icon {
   opacity: 1;
 }
+.add-new-folder {
+  margin-top: 1rem;
+}
+.add-new-tasklist {
+  margin-top: 1rem;
+}
+.add-new-tasklist input {
+  font-size: 0.9rem;
+}
