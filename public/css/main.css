@@ -141,6 +141,7 @@ body {
   display: inline-block;
   position: relative;
   transition: color 0.3s ease;
+  margin: 0rem 0.5rem 0 0.5rem;
 }
 
 .task-main.completed p {
@@ -164,7 +165,7 @@ body {
 .add-new-task input {
   border: 0;
   width: 90%;
-  margin-top: 1rem;
+  margin-top: 2rem;
   font-size: 1.2rem;
   padding: 0rem 0rem 0.5rem 0.5rem;
   border-bottom: 1px solid var(--orange-color);
