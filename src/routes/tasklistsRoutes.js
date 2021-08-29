@@ -94,6 +94,26 @@ router.patch(
     }
   }
 );
+router.delete("/tasklists/:id/removeTask/:taskid", auth, async (req, res) => {
+  try {
+    const tasklistId = req.params.id;
+    const taskId = req.params.taskid;
+
+    const tasklist = await TaskListModel.findOne({
+      _id: tasklistId,
+      owner: req.user._id,
+    });
+    if (!tasklist) {
+      return res.status(404).send();
+    }
+    tasklist.tasks = tasklist.tasks.filter((task) => task._id != taskId);
+    await tasklist.save();
+    return res.send(tasklist);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
+  }
+});
 
 // Delete task by id
 router.delete("/tasklists/:id", auth, async (req, res) => {

@@ -32,7 +32,13 @@ const renderTasks = (tasks) => {
     <li class="task-main ${
       task.completed === true ? "completed" : ""
     }" data-task-main-id="${task._id}">
-              <p class="task-main-text">${task.title}</p>
+              <p class="task-main-text">${task.title} </p>
+              <lord-icon class="remove-icon icon-hidden"
+              src="https://cdn.lordicon.com/rivoakkk.json"
+              trigger="hover"
+              colors="primary:#191919,secondary:#ff8000"
+              style="width:25px;height:25px">
+          </lord-icon>
             </li>
     `;
   });
@@ -130,11 +136,29 @@ const markAsIncomplete = async (task) => {
     },
   })
     .then((res) => res.json())
-    .then((res) => {
+    .then(() => {
       folders[activeFolder].tasklists[activeTaskListIndex].tasks.find(
         (el) => el._id == taskid
       ).completed = false;
       task.classList.remove("completed");
+    });
+};
+const removeTask = async (task) => {
+  const taskId = task.dataset.taskMainId;
+  await fetch(`/tasklists/${activeTaskList}/removeTask/${taskId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then(() => {
+      folders[activeFolder].tasklists[activeTaskListIndex].tasks = folders[
+        activeFolder
+      ].tasklists[activeTaskListIndex].tasks.filter(
+        (task) => task._id != taskId
+      );
+      task.remove();
     });
 };
 
@@ -157,10 +181,14 @@ foldersContainer.addEventListener("click", (e) => {
 tasksUl.addEventListener("click", (e) => {
   const task = e.target.closest("li");
   if (task) {
-    if (task.classList.contains("completed")) {
-      markAsIncomplete(task);
+    if (e.target.classList.contains("remove-icon")) {
+      removeTask(task);
     } else {
-      markAsCompleted(task);
+      if (task.classList.contains("completed")) {
+        markAsIncomplete(task);
+      } else {
+        markAsCompleted(task);
+      }
     }
   }
 });

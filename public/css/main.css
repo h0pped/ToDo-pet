@@ -142,6 +142,7 @@ body {
   position: relative;
   transition: color 0.3s ease;
 }
+
 .task-main.completed p {
   color: #aeacac;
 }
@@ -178,4 +179,20 @@ body {
 .active-tasklist p {
   transition: all 0.3s ease;
   color: var(--orange-color);
+}
+.remove-icon {
+  transition: opacity 0.3s ease;
+}
+.task-main:hover .remove-icon {
+  visibility: visible;
+
+  opacity: 1;
+}
+.task-main {
+  display: flex;
+  align-items: center;
+}
+.icon-hidden {
+  visibility: hidden;
+  opacity: 0;
 }
