@@ -187,6 +187,7 @@ body {
   display: none;
 }
 .active-tasklist p {
+  transform: scale(1.05);
   transition: all 0.3s ease;
   color: var(--orange-color);
 }
@@ -258,4 +259,12 @@ body {
   background: var(--orange-color);
   padding: 0.5rem;
   width: 100%;
+}
+
+.fas.fa-chevron-right {
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.folder-title.active .fas.fa-chevron-right {
+  transform: rotate(90deg);
 }

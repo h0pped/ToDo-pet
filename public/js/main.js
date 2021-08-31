@@ -70,7 +70,9 @@ const generateFolder = (data, index) => {
   data.tasklists.forEach((task, index) => {
     tasklists += `<li><div class="task" data-task="${
       task._id
-    }" data-tasklist-index="${index}"><p class="task-text">${
+    }" data-tasklist-index="${index}">
+    
+    <p class="task-text">${
       task.title
     }<span class="date-span">${getConvertedTime(
       task.updatedAt
@@ -88,6 +90,7 @@ const generateFolder = (data, index) => {
   folder.innerHTML = `
   
   <div class="folder-title">
+  <i class="fas fa-chevron-right"></i>
                   <button class="medium-text link-button">${data.title}</button>
                   <div class="folder-delete-container">
                     <lord-icon class="remove-icon icon-hidden"
@@ -97,7 +100,7 @@ const generateFolder = (data, index) => {
                       style="width:25px;height:25px">
                     </lord-icon>
                   </div>
-                </div>
+  </div>
 
                 <div class="folder-tasks">
                   <ul class="tasks-list">
