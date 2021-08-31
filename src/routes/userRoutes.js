@@ -56,6 +56,7 @@ router.post("/users", async (req, res) => {
     });
     await folder.save();
     const token = await user.generateAuthToken();
+    res.cookie("authToken", token);
     return res.status(201).send({ user, token });
   } catch (err) {
     res.status(500).send(err);
