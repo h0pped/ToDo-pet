@@ -331,6 +331,9 @@ foldersMain.addEventListener("click", (e) => {
 });
 foldersMain.addEventListener("keyup", async (e) => {
   if (e.target.classList.contains("newTaskList") && e.key === "Enter") {
+    if (!e.target.value) {
+      return;
+    }
     const tasklistTitle = e.target.value;
     const folderIndex = e.target.closest(".folder").dataset.folderIndex;
     await addTaskList(folderIndex, tasklistTitle);
@@ -368,17 +371,26 @@ tasksUl.addEventListener("click", (e) => {
 });
 AddNewTaskInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
+    if (!e.target.value) {
+      return;
+    }
     addTask(AddNewTaskInput.value);
     AddNewTaskInput.value = "";
   }
 });
 folderMainInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
+    if (!e.target.value) {
+      return;
+    }
     changeFolderName(activeFolder, folderMainInput.value);
   }
 });
 taskListMainInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
+    if (!e.target.value) {
+      return;
+    }
     console.log("Active folder: ", activeFolder);
     console.log("Active list: ", activeTaskListIndex);
     changeListName(activeFolder, activeTaskListIndex, taskListMainInput.value);
@@ -386,6 +398,9 @@ taskListMainInput.addEventListener("keyup", (e) => {
 });
 addNewFolderInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
+    if (!e.target.value) {
+      return;
+    }
     addFolder(addNewFolderInput.value);
     addNewFolderInput.value = "";
     addNewFolderEl.classList.add("hidden");
