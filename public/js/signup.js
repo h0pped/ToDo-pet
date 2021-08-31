@@ -26,8 +26,8 @@ form.addEventListener("submit", async (e) => {
       const json = await response.json();
 
       if (json.user && json.token) {
-        localStorage.setItem("token", json.token);
-        window.location.href = "/supchik";
+        // localStorage.setItem("token", json.token);
+        window.location.href = "/main";
       }
     } else {
       icon.removeAttribute("trigger");
