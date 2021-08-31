@@ -86,12 +86,12 @@ body {
 .task p {
   overflow-wrap: anywhere;
 }
-.add-new-container .button {
+.logout-container .button {
   width: 100%;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-.add-new-container .button:hover {
+.logout-container .button:hover {
   transform: scale(1.05);
 }
 
@@ -246,4 +246,16 @@ body {
 }
 .tasklist-title input {
   font-size: 2rem;
+}
+.logout-container {
+  width: 100%;
+}
+.logout-container .button {
+  display: block;
+  color: var(--background-color);
+  text-align: center;
+  text-decoration: none;
+  background: var(--orange-color);
+  padding: 0.5rem;
+  width: 100%;
 }
