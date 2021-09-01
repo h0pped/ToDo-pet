@@ -23,7 +23,9 @@ router.post("/users/login", async (req, res) => {
       return res.send({ user, token });
     }
   } catch (err) {
-    console.log(err);
+    if (err.message == "Unable to login!") {
+      return res.status(404).send({ err });
+    }
     res.status(500).send(err);
   }
 });
@@ -43,7 +45,7 @@ router.get("/users/logoutAll", auth, async (req, res) => {
     res.send();
   } catch (err) {
     console.log(err);
-    res.status(500).send();
+    res.status(500).send({ err });
   }
 });
 router.post("/users", async (req, res) => {
@@ -59,7 +61,10 @@ router.post("/users", async (req, res) => {
     res.cookie("authToken", token);
     return res.status(201).send({ user, token });
   } catch (err) {
-    res.status(500).send(err);
+    if (err.code === 11000) {
+      return res.status(400).send({ err: "Email is already used" });
+    }
+    res.status(500).send({ err });
   }
 });
 router.delete("/users/me", auth, async (req, res) => {
@@ -67,7 +72,7 @@ router.delete("/users/me", auth, async (req, res) => {
     await req.user.remove();
     return res.send(req.user);
   } catch (err) {
-    return status(500).send(err);
+    return status(500).send({ err });
   }
 });
 module.exports = router;

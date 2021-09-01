@@ -6,6 +6,9 @@ const auth = require("../middlewares/auth");
 
 // Add new folder
 router.post("/folders", auth, async (req, res) => {
+  if (!req.body.title) {
+    return res.status(500).send({ err: "Title was not provided" });
+  }
   const folder = new FolderModel({
     ...req.body,
     owner: req.user._id,
@@ -14,7 +17,7 @@ router.post("/folders", auth, async (req, res) => {
     await folder.save();
     res.status(201).send(folder);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ err });
   }
 });
 
@@ -24,13 +27,16 @@ router.get("/folders", auth, async (req, res) => {
     await req.user.populate("folders").execPopulate();
     res.status(200).send(req.user.folders);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ err });
   }
 });
 
 // Rename folder
 router.patch("/folders/:id", auth, async (req, res) => {
   try {
+    if (!req.body.title) {
+      return res.status(500).send({ err: "Title was not provided" });
+    }
     const id = req.params.id;
     const folder = await FolderModel.findOne({
       _id: id,
@@ -44,7 +50,7 @@ router.patch("/folders/:id", auth, async (req, res) => {
     res.status(200).send(folder);
   } catch (err) {
     console.log(err);
-    res.status(500).send(err);
+    res.status(500).send({ err });
   }
 });
 
@@ -66,7 +72,7 @@ router.delete("/folders/:id", auth, async (req, res) => {
     res.status(200).send(folder);
   } catch (err) {
     console.log(err);
-    res.status(500).send(err);
+    res.status(500).send({ err });
   }
 });
 module.exports = router;

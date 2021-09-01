@@ -34,11 +34,15 @@
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" name="email" id="email_input">
+              <label for="email" id="email-validation" class="validation-label hidden">Email is required</label>
+
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" name="password" id="password_input">
+              <label for="password" id="password-validation" class="validation-label hidden">Password is required</label>
             </div>
+            <p class="login-error-text hidden">Incorrect email or password. Please try again!</p>
             <button type="submit" class="button bg-orange">Sign in!</button>
           </form>
           <p>Don't have account? <span><a href="/signup" class="link-button link-small link-button-orange">Create</a></span> it!</p>

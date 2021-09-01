@@ -15,7 +15,8 @@ const UserSchema = mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      unique:true
+      unique: true,
+      lowercase: true,
     },
     password: {
       type: String,
@@ -58,6 +59,12 @@ UserSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id }, "hellojwt");
   user.tokens.push({ token });
+  await user.save();
+  return token;
+};
+UserSchema.methods.deleteToken = async function (token) {
+  const user = this;
+  user.tokens = user.tokens.filter((el) => el.token !== token);
   await user.save();
   return token;
 };

@@ -23,7 +23,8 @@ router.get("/signup", (req, res) => {
   // console.log(req.cookies)
   return res.render("signup");
 });
-router.get("/logout", auth, (req, res) => {
+router.get("/logout", auth, async (req, res) => {
+  await req.user.deleteToken(req.cookies.authToken);
   delete res.clearCookie("authToken");
   return res.redirect("/");
 });

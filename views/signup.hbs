@@ -33,16 +33,23 @@
             <div class="form-group">
               <label for="name">Name</label>
               <input type="name" name="name" id="name_input">
+              <label for="name" id="name-validation" class="validation-label hidden">Name is required</label>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" name="email" id="email_input">
+              <label for="email" id="email-validation" class="validation-label hidden">Email is required</label>
+
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" name="password" id="password_input">
+              <label for="email" id="password-validation" class="validation-label hidden">Password is required</label>
+
             </div>
+            <p class="registration-error-text hidden">Anime</p>
             <button type="submit" class="button bg-orange">Sign up!</button>
+
           </form>
           <p>Already have account? <span><a href="/signin" class="link-button link-small link-button-orange">Sign in!</a></span></p>
       </div>

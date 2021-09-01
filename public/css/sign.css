@@ -51,3 +51,25 @@ form button {
 .authorize-card p {
   margin-top: 1rem;
 }
+.validation-label {
+  color: red;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+.validation-label.hidden {
+  display: none;
+}
+.login-error-text {
+  color: red;
+  font-size: 0.75rem;
+}
+.login-error-text.hidden {
+  display: none;
+}
+.registration-error-text {
+  color: red;
+  font-size: 0.75rem;
+}
+.registration-error-text.hidden {
+  display: none;
+}
