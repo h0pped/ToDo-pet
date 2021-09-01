@@ -2,7 +2,7 @@
 
 ## Task lists web application
 
-**[Test it by your own! (Live Demo)](https://awril-minimalist.herokuapp.com/main)**
+**[Test it by your own! (Live Demo)](https://awril-minimalist.herokuapp.com/)**
 
 ![Main-page.png](https://raw.githubusercontent.com/h0pped/ToDo-pet/main/public/readme-images/title-page.png)
 
