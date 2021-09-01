@@ -13,7 +13,7 @@ app.use(express.static(publicDir));
 app.set("view engine", "hbs");
 app.set("views", viewsPath);
 hbs.registerPartials(partialsPath);
-const port = 3000;
+const port = process.env.PORT;
 require("./db/mongoose");
 
 const userRouter = require("./routes/userRoutes");

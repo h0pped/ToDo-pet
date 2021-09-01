@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
     if (req.token) {
       const token = req.token;
 
-      const decoded = jwt.verify(token, "hellojwt");
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await UserModel.findOne({
         _id: decoded._id,
         "tokens.token": token,

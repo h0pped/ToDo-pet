@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/todo-list", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .then((res) => {
+    console.log("DB Connected!");
+  })
+  .catch((err) => {
+    console.log(Error, err.message);
+  });

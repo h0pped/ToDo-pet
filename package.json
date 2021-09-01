@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js -e js,html,hbs,css"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/app.js -e js,html,hbs,css "
   },
   "author": "awri.l",
   "license": "ISC",
@@ -20,5 +20,8 @@
     "mongodb": "^4.1.0",
     "mongoose": "^5.13.8",
     "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
   }
 }

@@ -4,10 +4,14 @@ const auth = require("../middlewares/auth");
 const router = new express.Router();
 
 router.get("", (req, res) => {
-  if (req.cookies.authToken) {
-    return res.redirect("/main");
+  try {
+    if (req.cookies.authToken) {
+      return res.redirect("/main");
+    }
+    res.render("index");
+  } catch (err) {
+    console.log(err);
   }
-  res.render("index");
 });
 router.get("/signin", (req, res) => {
   if (req.cookies.authToken) {
