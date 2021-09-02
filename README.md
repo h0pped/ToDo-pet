@@ -1,9 +1,10 @@
 # Plan your day and stay productive!
 
 ## Task lists web application
-![Main-page.png](https://raw.githubusercontent.com/h0pped/ToDo-pet/main/public/readme-images/title-page.png)
 
-Test it by your own! (In progress)
+**[Test it by your own! (Live Demo)](https://awril-minimalist.herokuapp.com/)**
+
+![Main-page.png](https://raw.githubusercontent.com/h0pped/ToDo-pet/main/public/readme-images/title-page.png)
 
 ![main-page.png](https://raw.githubusercontent.com/h0pped/ToDo-pet/main/public/readme-images/main-page.png)
 
