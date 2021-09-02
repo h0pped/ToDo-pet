@@ -44,7 +44,6 @@ router.get("/users/logoutAll", auth, async (req, res) => {
     await req.user.save();
     res.send();
   } catch (err) {
-    console.log(err);
     res.status(500).send({ err });
   }
 });

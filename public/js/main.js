@@ -65,7 +65,7 @@ const generateFolder = (data, index) => {
 
   folder.classList.add("folder");
   folder.dataset.folderIndex = index;
-  console.log(data);
+
   let tasklists = "";
   data.tasklists.forEach((task, index) => {
     tasklists += `<li><div class="task" data-task="${
@@ -130,7 +130,6 @@ const updateUI = () => {
             foldersMain.childNodes[folder.dataset.folderIndex];
           removeFolder(folderElement);
           folders.splice(folder.dataset.folderIndex, 1);
-          console.log(folderElement);
           foldersMain.removeChild(folderElement);
           updateFolderIndexes();
         }
@@ -208,7 +207,6 @@ const removeTask = async (task) => {
 };
 const addTask = async (title) => {
   const tasklistId = folders[activeFolder].tasklists[activeTaskListIndex]._id;
-  // console.log(tasklistId);
   await fetch(`/tasklists/addTask/${tasklistId}`, {
     method: "POST",
     headers: {
@@ -249,13 +247,9 @@ const removeFolder = async (folder) => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then((res) => res.json())
-    .then((res) => console.log("DELETED: ", res));
+  });
 };
 const changeFolderName = async (folderIndex, title) => {
-  console.log("Folder index: ", folderIndex);
-  console.log("Folder title: ", title);
   const folderId = folders[folderIndex]._id;
   await fetch(`/folders/${folderId}`, {
     method: "PATCH",
@@ -374,7 +368,7 @@ tasksUl.addEventListener("click", (e) => {
 });
 AddNewTaskInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
-    if (!e.target.value) {
+    if (!e.target.value && e.target.value.trim() === "") {
       return;
     }
     addTask(AddNewTaskInput.value);
@@ -383,7 +377,7 @@ AddNewTaskInput.addEventListener("keyup", (e) => {
 });
 folderMainInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
-    if (!e.target.value) {
+    if (!e.target.value && e.target.value.trim() === "") {
       return;
     }
     changeFolderName(activeFolder, folderMainInput.value);
@@ -391,17 +385,15 @@ folderMainInput.addEventListener("keyup", (e) => {
 });
 taskListMainInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
-    if (!e.target.value) {
+    if (!e.target.value && e.target.value.trim() === "") {
       return;
     }
-    console.log("Active folder: ", activeFolder);
-    console.log("Active list: ", activeTaskListIndex);
     changeListName(activeFolder, activeTaskListIndex, taskListMainInput.value);
   }
 });
 addNewFolderInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
-    if (!e.target.value) {
+    if (!e.target.value && e.target.value.trim() === "") {
       return;
     }
     addFolder(addNewFolderInput.value);

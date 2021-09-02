@@ -49,7 +49,6 @@ router.patch("/folders/:id", auth, async (req, res) => {
     await folder.save();
     res.status(200).send(folder);
   } catch (err) {
-    console.log(err);
     res.status(500).send({ err });
   }
 });
@@ -64,14 +63,12 @@ router.delete("/folders/:id", auth, async (req, res) => {
       },
       { useFindAndModify: false }
     );
-    console.log(folder);
     if (!folder) {
       res.status(404).send();
     }
     await folder.remove();
     res.status(200).send(folder);
   } catch (err) {
-    console.log(err);
     res.status(500).send({ err });
   }
 });

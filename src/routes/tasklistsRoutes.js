@@ -40,7 +40,6 @@ router.post("/tasklists/addTask/:id", auth, async (req, res) => {
     taskList.save();
     return res.status(201).send(taskList);
   } catch (err) {
-    console.log(err);
     res.status(500).send(err);
   }
 });
@@ -64,7 +63,6 @@ router.patch("/tasklists/:id/markAsDone/:taskid", auth, async (req, res) => {
     await tasklist.save();
     res.send(task);
   } catch (err) {
-    console.log(err);
     res.status(500).send(err);
   }
 });
@@ -90,7 +88,6 @@ router.patch(
       await tasklist.save();
       res.send(task);
     } catch (err) {
-      console.log(err);
       res.status(500).send(err);
     }
   }
@@ -109,7 +106,6 @@ router.patch("/tasklists/:listid", auth, async (req, res) => {
     await tasklist.save();
     res.send(tasklist);
   } catch (err) {
-    console.log(err);
     res.status(500).send({ err });
   }
 });
@@ -129,7 +125,6 @@ router.delete("/tasklists/:id/removeTask/:taskid", auth, async (req, res) => {
     await tasklist.save();
     return res.send(tasklist);
   } catch (err) {
-    console.log(err);
     return res.status(500).send(err);
   }
 });

@@ -26,8 +26,6 @@ FolderSchema.virtual("tasklists", {
 });
 
 async function removeChildrenTasks(folder, next) {
-  console.log("REMOVE FOLDER");
-  console.log(folder._id);
   await TaskListModel.deleteMany({
     folder: folder._id,
   });

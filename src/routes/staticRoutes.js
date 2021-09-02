@@ -10,7 +10,7 @@ router.get("", (req, res) => {
     }
     res.render("index");
   } catch (err) {
-    console.log(err);
+    res.status(500).send({ err });
   }
 });
 router.get("/signin", (req, res) => {
