@@ -12,11 +12,16 @@ let addNewTaskPlus = document.querySelector(".plus");
 let addNewFolderEl = document.querySelector(".add-new-folder");
 let addNewFolderInput = document.querySelector(".add-new-folder input");
 
+let asideToggler = document.querySelector(".aside-button");
+let asideMenu = document.querySelector(".aside-menu");
+
 let folders = [];
 let activeTaskList;
 let activeFolderIndex;
 let activeTaskListIndex;
 let activeTaskListElement;
+
+let asideOpened = false;
 const getTasksByFolder = async (folder) => {
   return await fetch(`/tasklists/byfolder/${folder._id}`).then((data) =>
     data.json()
@@ -405,4 +410,5 @@ addNewTaskPlus.addEventListener("click", (e) => {
   addNewFolderEl.classList.remove("hidden");
   addNewFolderEl.querySelector("input").focus();
 });
+
 getFolders();

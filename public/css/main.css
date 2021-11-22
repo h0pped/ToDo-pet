@@ -15,7 +15,7 @@ body {
 .aside-menu {
   border-right: 1px solid #191919;
   height: 100%;
-  width: 25%;
+  min-width: 25%;
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -267,4 +267,16 @@ body {
 }
 .folder-title.active .fas.fa-chevron-right {
   transform: rotate(90deg);
+}
+.aside-button{
+  position: absolute;
+  top:2%;
+  left: 2%;
+  display: block;
+}
+
+@media (max-width: 1200px) {
+  .main-container{
+    flex-direction: column-reverse;
+  }
 }
