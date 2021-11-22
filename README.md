@@ -14,7 +14,7 @@
  - Express.JS
  - MongoDB (with Mongoose ODM)
  - HTML&CSS
- - Vanilla JS for the front-back side
+ - Vanilla JS for the front-end side
  - Figma
 
 **Features:**
